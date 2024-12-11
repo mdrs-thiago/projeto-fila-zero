@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fila de Pedidos</title>
+    <!-- Link do Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Barra lateral -->
+    <div class="sidenav">
+        <h2 class="text-white text-center">FilaZero</h2>
+        <div class="nav-links">
+            <!-- Botões de navegação na parte superior -->
+            <a href="/dashboard">Dashboard</a>
+            <a href="{{ url_for('cardapio') }}">Cardápio</a>
+            <a href="{{ url_for('aviso') }}">Aviso</a>
+            
+        </div>
+        <!-- Botão de Logout em vermelho na parte inferior -->
+        <a href="{{ url_for('logout') }}">
+            <button class="logout-btn">Logout</button>
+        </a> 
+    </div>
+
+    <!-- Conteúdo principal -->
+    <div class="main-content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Fila de Pedidos</h2>
+            <div class="d-flex">
+                <form action="{{ url_for('deletar_pedidos_prontos') }}" method="POST">
+                    <button class="btn btn-primary btn-custom" type="submit">Limpar</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Tabela de pedidos -->
+        <table class="table table-striped text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Opção</th>
+                    <th>Código</th>
+                    <th>Status</th>
+                    <th>Feito?</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pedido in pedidos %}
+                <tr class="{{'table-success' if pedido.status == 'pronto'}}">
+                    <td class="align-middle">{{ pedido.opcao }}</td>
+                    <td class="align-middle">{{ pedido.codigo }}</td>
+                    <td class="align-middle">{{ pedido.status }}</td>
+                    <td>
+                        {% if pedido.status != 'pronto' %}
+                        <a href="{{url_for('marcar_pronto') }}?id={{pedido.id}}">
+                            <button type="button" class="btn btn-success">Pronto</button>
+                        </a>
+                        {% else %}
+                        <button type="button" class="btn btn-light" disabled>Pronto</button>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <style>
+        /* Customização da barra lateral */
+        .sidenav {
+            height: 100%;
+            width: 200px;  /* Diminuir a largura para 200px */
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            padding-top: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .nav-links {
+            flex-grow: 1;  /* Isso faz com que os links ocupem o espaço disponível antes do botão de logout */
+        }
+
+        .sidenav a {
+            padding: 10px 16px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #818181;
+            display: block;
+        }
+
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
+
+        .logout-btn {
+            background-color: transparent;
+            color: red;
+            text-align: center;
+            font-size: 18px;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            color: darkred;
+        }
+
+        .main-content {
+            margin-left: 200px;  /* Ajustar o conteúdo para o novo tamanho da barra lateral */
+            padding: 20px;
+        }
+
+        .table thead {
+            background-color: #343a40;
+            color: white;
+        }
+
+        .btn-custom {
+            margin-right: 10px;
+        }
+    </style>
+
+    <!-- Scripts do Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

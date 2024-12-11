@@ -1,7 +1,7 @@
 import sqlite3
 
 # Reabrindo a conexão com o banco de dados
-conn = sqlite3.connect('db/pedidos.db')
+conn = sqlite3.connect('instance/pedidos.db')
 cursor = conn.cursor()
 
 # Inserindo alguns pedidos na tabela
