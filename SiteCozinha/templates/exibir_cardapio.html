@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fila de Pedidos</title>
+    <title>Cardápio da Semana</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -60,17 +60,38 @@
             background-color: #1a1d21;
         }
 
-        .table thead {
+        /* Estilos da tabela */
+        .table-responsive {
+            overflow-x: auto; /* Adiciona barra de rolagem horizontal */
+        }
+
+        .cardapio-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            font-size: 1rem; /* Aumenta o tamanho da fonte */
+        }
+
+        .cardapio-table th, .cardapio-table td {
+            border: 1px solid #ddd;
+            padding: 15px; /* Aumenta o padding para tornar as células maiores */
+            text-align: center;
+            white-space: normal; /* Permite que o texto quebre em várias linhas */
+            word-wrap: break-word; /* Quebra palavras longas */
+        }
+
+        .cardapio-table th {
             background-color: #282b30;
-            color: white;
+            color: #fff;
+            font-weight: bold;
         }
 
-        .table-striped tbody tr:nth-of-type(odd) {
-            background-color: rgba(0, 0, 0, 0.05);
+        .cardapio-table tr:nth-child(even) {
+            background-color: #f9f9f9;
         }
 
-        .table-striped tbody tr:hover {
-            background-color: rgba(0, 0, 0, 0.075);
+        .cardapio-table tr:hover {
+            background-color: #f1f1f1;
         }
 
         /* Rodapé fixo na parte inferior */
@@ -100,13 +121,13 @@
                         <a class="nav-link" href="/cadastrar_cardapio"><i class="fas fa-utensils me-2"></i> Cadastrar Cardápio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/exibir_cardapio"><i class="fas fa-list-alt me-2"></i> Exibir Cardápio</a>
+                        <a class="nav-link active" href="/exibir_cardapio"><i class="fas fa-list-alt me-2"></i> Exibir Cardápio</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/incluir_alimento"><i class="fas fa-plus-circle me-2"></i> Incluir Alimento</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="/fila_pedidos"><i class="fas fa-clipboard-list me-2"></i> Fila de Pedidos</a>
+                        <a class="nav-link" href="/fila_pedidos"><i class="fas fa-clipboard-list me-2"></i> Fila de Pedidos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/aviso"><i class="fas fa-bell me-2"></i> Avisos</a>
@@ -121,44 +142,64 @@
 
     <!-- Conteúdo principal -->
     <div class="container">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2><i class="fas fa-clipboard-list me-2"></i> Fila de Pedidos</h2>
-            <div class="d-flex">
-                <form action="{{ url_for('deletar_pedidos_prontos') }}" method="POST">
-                    <button class="btn btn-primary" type="submit"><i class="fas fa-trash me-2"></i> Limpar</button>
-                </form>
-            </div>
-        </div>
+        <h2 class="text-center mb-4"><i class="fas fa-calendar-alt me-2"></i>Cardápio da Semana</h2>
 
-        <!-- Tabela de pedidos -->
-        <table class="table table-striped text-center">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Opção</th>
-                    <th>Código</th>
-                    <th>Status</th>
-                    <th>Feito?</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for pedido in pedidos %}
-                <tr class="{{'table-success' if pedido.status == 'pronto'}}">
-                    <td class="align-middle">{{ pedido.opcao }}</td>
-                    <td class="align-middle">{{ pedido.codigo }}</td>
-                    <td class="align-middle">{{ pedido.status }}</td>
-                    <td>
-                        {% if pedido.status != 'pronto' %}
-                        <a href="{{url_for('marcar_pronto') }}?id={{pedido.id}}">
-                            <button type="button" class="btn btn-success"><i class="fas fa-check me-2"></i>Pronto</button>
-                        </a>
-                        {% else %}
-                        <button type="button" class="btn btn-light" disabled><i class="fas fa-check me-2"></i>Pronto</button>
-                        {% endif %}
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <!-- Formulário de filtro por semana -->
+        <form action="{{ url_for('exibir_cardapio') }}" method="GET" class="mb-4">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label for="data_inicio" class="form-label">Data de Início:</label>
+                    <input type="date" id="data_inicio" name="data_inicio" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="data_fim" class="form-label">Data de Fim:</label>
+                    <input type="date" id="data_fim" name="data_fim" class="form-control" required>
+                </div>
+            </div>
+            <div class="mt-3 text-center">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-filter me-2"></i>Filtrar</button>
+            </div>
+        </form>
+
+        <!-- Tabela para exibir o cardápio -->
+        <div class="table-responsive">
+            <table class="cardapio-table">
+                <thead>
+                    <tr>
+                        <th>Dia</th>
+                        <th>Salada 1</th>
+                        <th>Salada 2</th>
+                        <th>Prato Principal</th>
+                        <th>Vegetariano</th>
+                        <th>Guarnição 1</th>
+                        <th>Guarnição 2</th>
+                        <th>Acompanhamento 1</th>
+                        <th>Acompanhamento 2</th>
+                        <th>Acompanhamento 3</th>
+                        <th>Fruta</th>
+                        <th>Doce</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cardapio in cardapios %}
+                    <tr>
+                        <td>{{ cardapio.data.strftime('%d/%m/%Y') }}</td>
+                        <td>{{ cardapio.salada1.nome }}</td>
+                        <td>{{ cardapio.salada2.nome }}</td>
+                        <td>{{ cardapio.prato_principal.nome }}</td>
+                        <td>{{ cardapio.vegetariano.nome }}</td>
+                        <td>{{ cardapio.guarnicao1.nome }}</td>
+                        <td>{{ cardapio.guarnicao2.nome }}</td>
+                        <td>{{ cardapio.acompanhamento1.nome }}</td>
+                        <td>{{ cardapio.acompanhamento2.nome }}</td>
+                        <td>{{ cardapio.acompanhamento3.nome }}</td>
+                        <td>{{ cardapio.fruta.nome }}</td>
+                        <td>{{ cardapio.doce.nome }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <!-- Rodapé -->

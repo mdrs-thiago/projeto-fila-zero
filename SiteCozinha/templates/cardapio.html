@@ -11,6 +11,11 @@
             color: #007bff;
             text-decoration: none;
             margin-top: 10px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        .back-button:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -22,11 +27,13 @@
         <h2 class="text-center mt-4">Cadastrar Cardápio</h2>
 
         <!-- Área para exibir mensagens de feedback -->
-        {% with messages = get_flashed_messages() %}
+        {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
-                <div class="alert alert-success" role="alert">
-                    {{ messages[0] }}
-                </div>
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
             {% endif %}
         {% endwith %}
 

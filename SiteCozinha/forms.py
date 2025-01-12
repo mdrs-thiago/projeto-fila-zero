@@ -19,10 +19,4 @@ class FormCriarConta(FlaskForm):
     def validate_email(self, email):
         usuario = Usuario.query.filter_by(email=email.data).first()
         if usuario:
-            return ValidationError("E-mail já cadastrado, faça login para continuar")
-
-'''
-class FormFoto(FlaskForm): 
-    foto = FileField("Foto", validators=[DataRequired()])
-    botao_confirmacao = SubmitField("Enviar")
-'''
+            raise ValidationError("E-mail já cadastrado, faça login para continuar")
