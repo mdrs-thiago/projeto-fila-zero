@@ -122,15 +122,36 @@
 
     <!-- Conteúdo principal -->
     <div class="container">
+                <!-- Exemplo de inserção da data e hora no cabeçalho -->
         <header class="d-flex justify-content-between align-items-center mb-4">
             <h1><i class="fas fa-tachometer-alt me-2"></i>Dashboard de Marmitas</h1>
+            <div>
+                <span><strong>Data:</strong> {{ data_atual }}</span> | 
+                <span><strong>Hora:</strong> <span id="hora_atual">{{ hora_atual }}</span></span>
+            </div>
+
+        <script>
+            // Função para atualizar a hora a cada segundo
+            function atualizarHora() {
+                var agora = new Date();
+                var hora = agora.getHours().toString().padStart(2, '0');
+                var minuto = agora.getMinutes().toString().padStart(2, '0');
+                var segundo = agora.getSeconds().toString().padStart(2, '0');
+                document.getElementById("hora_atual").textContent = hora + ':' + minuto + ':' + segundo;
+            }
+
+            // Atualizar a hora a cada 1000 ms (1 segundo)
+            setInterval(atualizarHora, 1000);
+        </script>
+
             <div class="dropdown">
                 <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" 
                         data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fas fa-user me-2"></i>Bem-vindo, {{ nome_usuario }}
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                    <li><a class="dropdown-item" href="/alterar_senha">Alterar Senha</a></li>
+                    <li><a class="dropdown-item" href="">Alterar Senha</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('criarconta') }}">+ Novo usuário</a></li>
                 </ul>
             </div>
         </header>

@@ -59,6 +59,7 @@ def dashboard():
     data_inicial = request.form.get('data_inicial')
     data_final = request.form.get('data_final')
     refeicao = request.form.get('refeicao')
+    data_atual = datetime.now().strftime('%d/%m/%Y')
     
     if data_inicial and data_final:
         data_inicial = datetime.strptime(data_inicial, '%Y-%m-%d')
@@ -94,7 +95,8 @@ def dashboard():
 
 
     return render_template('dashboard.html', grafico_horario=grafico_horario,
-                           grafico_tipo=grafico_tipo, grafico_opcoes=grafico_opcoes, grafico_qtd_aluno=grafico_qtd_aluno, nome_usuario=current_user.username)
+                           grafico_tipo=grafico_tipo, grafico_opcoes=grafico_opcoes, grafico_qtd_aluno=grafico_qtd_aluno, nome_usuario=current_user.username,
+                           data_atual=data_atual)
 
 # Função para filtrar dados do CSV
 def filtrar_dados(data_inicial, data_final, refeicao):
