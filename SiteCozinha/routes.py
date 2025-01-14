@@ -94,7 +94,7 @@ def dashboard():
 
 
     return render_template('dashboard.html', grafico_horario=grafico_horario,
-                           grafico_tipo=grafico_tipo, grafico_opcoes=grafico_opcoes, grafico_qtd_aluno=grafico_qtd_aluno)
+                           grafico_tipo=grafico_tipo, grafico_opcoes=grafico_opcoes, grafico_qtd_aluno=grafico_qtd_aluno, nome_usuario=current_user.username)
 
 # Função para filtrar dados do CSV
 def filtrar_dados(data_inicial, data_final, refeicao):
