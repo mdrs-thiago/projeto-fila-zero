@@ -117,7 +117,20 @@ def filtrar_dados(data_inicial, data_final, refeicao):
 @login_required
 def index():
     pedidos = obter_pedidos()
-    return render_template('index.html', pedidos=pedidos)
+
+    # Contar quantos pedidos estão com o status "preparando"
+    conn = sqlite3.connect('instance/pedidos.db')
+    cursor = conn.cursor()
+    try:
+        cursor.execute('SELECT COUNT(*) FROM pedidos WHERE status = "preparando"')
+        qtd_preparando = cursor.fetchone()[0]
+    except Exception as e:
+        flash(f'Erro ao carregar os dados: {str(e)}', 'danger')
+        qtd_preparando = 0
+    finally:
+        conn.close()
+
+    return render_template('index.html', pedidos=pedidos, qtd_preparando=qtd_preparando)
 
 # Função para obter pedidos do banco SQLite
 def obter_pedidos():
