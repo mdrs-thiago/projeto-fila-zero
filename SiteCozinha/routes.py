@@ -85,8 +85,16 @@ def dashboard():
     fig3 = px.pie(df_opcoes, names='opcao', values='quantidade', title='Distribuição de Doce e Fruta')
     grafico_opcoes = pio.to_html(fig3, full_html=False)
 
+    # Gráfico 4: Quantidade de Alunos atendido por dia
+    alunos_por_dia = df.groupby('dia_da_semana')['id_aluno'].nunique().reset_index()
+    fig4 = px.bar(alunos_por_dia, x='dia_da_semana', y='id_aluno', 
+             title='Quantidade de Alunos Atendidos por Dia da Semana', 
+             labels={'id_aluno': 'Número de Alunos Atendidos', 'dia_da_semana': 'Dia da Semana'})
+    grafico_qtd_aluno = pio.to_html(fig4, full_html=False)
+
+
     return render_template('dashboard.html', grafico_horario=grafico_horario,
-                           grafico_tipo=grafico_tipo, grafico_opcoes=grafico_opcoes)
+                           grafico_tipo=grafico_tipo, grafico_opcoes=grafico_opcoes, grafico_qtd_aluno=grafico_qtd_aluno)
 
 # Função para filtrar dados do CSV
 def filtrar_dados(data_inicial, data_final, refeicao):
