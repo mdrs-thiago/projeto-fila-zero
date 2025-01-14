@@ -94,3 +94,9 @@ class CardapioSemana(database.Model):
     acompanhamento3 = database.relationship('Acompanhamento', foreign_keys=[acompanhamento3_id])
     fruta = database.relationship('Fruta')
     doce = database.relationship('Doce')
+
+# Modelo de Aviso
+class Aviso(database.Model):
+    id = database.Column(database.Integer, primary_key=True)
+    mensagem = database.Column(database.String(500), nullable=False)  # Mensagem do aviso
+    data_criacao = database.Column(database.DateTime, default=datetime.utcnow)  # Data de criação

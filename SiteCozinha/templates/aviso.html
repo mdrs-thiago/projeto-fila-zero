@@ -64,6 +64,27 @@
             resize: none;
         }
 
+        /* Estilos para os avisos */
+        .aviso-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .aviso-text {
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .aviso-data {
+            font-size: 0.875rem;
+            color: #777;
+            margin-top: 10px;
+        }
+
         /* Rodapé fixo na parte inferior */
         footer {
             background-color: #282b30;
@@ -131,6 +152,23 @@
                 </div>
             {% endif %}
         {% endwith %}
+
+        <!-- Lista de Avisos -->
+        <div class="mt-5">
+            <h3 class="mb-4"><i class="fas fa-bell me-2"></i> Avisos Recentes</h3>
+            {% if avisos %}
+                {% for aviso in avisos %}
+                    <div class="aviso-card">
+                        <div class="aviso-text">{{ aviso.mensagem }}</div>
+                        <div class="aviso-data">Enviado em {{ aviso.data_criacao.strftime('%d/%m/%Y %H:%M') }}</div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="alert alert-info" role="alert">
+                    Nenhum aviso encontrado.
+                </div>
+            {% endif %}
+        </div>
     </div>
 
     <!-- Rodapé -->

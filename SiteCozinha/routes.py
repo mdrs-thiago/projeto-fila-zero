@@ -2,7 +2,7 @@ from flask import render_template, url_for, redirect, request, flash, jsonify
 from SiteCozinha import app, database, bcrypt
 from flask_login import login_required, login_user, logout_user, current_user
 from SiteCozinha.forms import FormLogin, FormCriarConta
-from SiteCozinha.models import Usuario, Cardapio, Salada, PratoPrincipal, PratoVegetariano, Guarnicao, Acompanhamento, Fruta, Doce, CardapioSemana
+from SiteCozinha.models import Usuario, Cardapio, Salada, PratoPrincipal, PratoVegetariano, Guarnicao, Acompanhamento, Fruta, Doce, CardapioSemana, Aviso
 import pandas as pd
 import plotly.express as px
 import plotly.io as pio
@@ -16,9 +16,14 @@ def homepage():
     form_login = FormLogin()
     if form_login.validate_on_submit():
         usuario = Usuario.query.filter_by(email=form_login.email.data).first()
-        if usuario and bcrypt.check_password_hash(usuario.senha, form_login.senha.data):
-            login_user(usuario)
-            return redirect(url_for("dashboard"))
+        if usuario:
+            if bcrypt.check_password_hash(usuario.senha, form_login.senha.data):
+                login_user(usuario)
+                return redirect(url_for("dashboard"))
+            else:
+                flash("Senha incorreta. Tente novamente.", "error")  # Mensagem de erro para senha incorreta
+        else:
+            flash("E-mail não encontrado. Verifique o e-mail ou crie uma conta.", "error")  # Mensagem de erro para e-mail não encontrado
     return render_template("homepage.html", form=form_login)
 
 # Rota para criar conta
@@ -152,15 +157,22 @@ def deletar_pedidos_prontos():
 @app.route('/aviso')
 @login_required
 def aviso():
-    return render_template('aviso.html')
+    avisos = Aviso.query.order_by(Aviso.data_criacao.desc()).all()  # Busca todos os avisos
+    return render_template('aviso.html', avisos=avisos)
 
 # Rota para enviar mensagem
 @app.route('/enviar_mensagem', methods=['POST'])
 @login_required
 def enviar_mensagem():
     mensagem = request.form.get('mensagem')
-    flash('Sua mensagem foi enviada com sucesso!')
-    return render_template('aviso.html')
+    if mensagem:
+        novo_aviso = Aviso(mensagem=mensagem) 
+        database.session.add(novo_aviso)
+        database.session.commit()
+        flash('Sua mensagem foi enviada com sucesso!', 'success')
+    else:
+        flash('A mensagem não pode estar vazia.', 'error')
+    return redirect(url_for('aviso'))
 
 # Rota para exibir o cardápio
 @app.route('/cardapio')

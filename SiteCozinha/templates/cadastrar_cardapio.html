@@ -45,6 +45,7 @@
             padding: 2rem;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 92%; /* Aumenta a largura do container */
         }
 
         .btn-primary {
@@ -61,20 +62,27 @@
         }
 
         /* Estilos da tabela */
+        .table-responsive {
+            overflow-x: auto; /* Adiciona barra de rolagem horizontal */
+        }
+
         .table {
-            width: 220%;
-            font-size: 1rem; /* Aumenta o tamanho da fonte */
+            width: 100%;
+            font-size: 0.9rem; /* Diminui o tamanho da fonte */
+            table-layout: fixed; /* Define largura fixa para as colunas */
         }
 
         .table th, .table td {
             vertical-align: middle; /* Centraliza o conteúdo das células */
-            padding: 15px; /* Aumenta o padding para tornar as células maiores */
+            padding: 8px; /* Diminui o padding para tornar as células menores */
+            white-space: normal; /* Permite que o texto quebre em várias linhas */
+            word-wrap: break-word; /* Quebra palavras longas */
         }
 
         .table thead th {
             background-color: #282b30;
             color: #fff;
-            font-size: 1.1rem; /* Aumenta o tamanho da fonte do cabeçalho */
+            font-size: 1rem; /* Diminui o tamanho da fonte do cabeçalho */
         }
 
         .table-striped tbody tr:nth-of-type(odd) {
@@ -152,18 +160,18 @@
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th>Dia</th>
-                            <th>Salada 1</th>
-                            <th>Salada 2</th>
-                            <th>Prato Principal</th>
-                            <th>Vegetariano</th>
-                            <th>Guarnição 1</th>
-                            <th>Guarnição 2</th>
-                            <th>Acompanhamento 1</th>
-                            <th>Acompanhamento 2</th>
-                            <th>Acompanhamento 3</th>
-                            <th>Fruta</th>
-                            <th>Doce</th>
+                            <th style="width: 5.3%;">Dia</th>
+                            <th style="width: 10%;">Salada 1</th>
+                            <th style="width: 10%;">Salada 2</th>
+                            <th style="width: 12%;">Prato Principal</th>
+                            <th style="width: 12%;">Vegetariano</th>
+                            <th style="width: 12%;">Guarnição 1</th>
+                            <th style="width: 12%;">Guarnição 2</th>
+                            <th style="width: 10%;">Acompanhamento 1</th>
+                            <th style="width: 10%;">Acompanhamento 2</th>
+                            <th style="width: 10%;">Acompanhamento 3</th>
+                            <th style="width: 9%;">Fruta</th>
+                            <th style="width: 9%;">Doce</th>
                         </tr>
                     </thead>
                     <tbody>
