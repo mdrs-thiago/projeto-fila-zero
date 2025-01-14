@@ -86,7 +86,7 @@ def dashboard():
     grafico_opcoes = pio.to_html(fig3, full_html=False)
 
     # Gráfico 4: Quantidade de Alunos atendido por dia
-    alunos_por_dia = df.groupby('dia_da_semana')['id_aluno'].nunique().reset_index()
+    alunos_por_dia = df_filtrado.groupby('dia_da_semana')['id_aluno'].nunique().reset_index()
     fig4 = px.bar(alunos_por_dia, x='dia_da_semana', y='id_aluno', 
              title='Quantidade de Alunos Atendidos por Dia da Semana', 
              labels={'id_aluno': 'Número de Alunos Atendidos', 'dia_da_semana': 'Dia da Semana'})
