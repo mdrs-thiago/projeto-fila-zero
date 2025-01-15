@@ -60,6 +60,10 @@ def dashboard():
     data_final = request.form.get('data_final')
     refeicao = request.form.get('refeicao')
     data_atual = datetime.now().strftime('%d/%m/%Y')
+    marmitas_por_dia = df.groupby('data').size()
+    recorde_dia = marmitas_por_dia.idxmax()
+    recorde_qtd = marmitas_por_dia.max()
+    total_marmitas = len(df)
     
     if data_inicial and data_final:
         data_inicial = datetime.strptime(data_inicial, '%Y-%m-%d')
@@ -96,7 +100,7 @@ def dashboard():
 
     return render_template('dashboard.html', grafico_horario=grafico_horario,
                            grafico_tipo=grafico_tipo, grafico_opcoes=grafico_opcoes, grafico_qtd_aluno=grafico_qtd_aluno, nome_usuario=current_user.username,
-                           data_atual=data_atual)
+                           data_atual=data_atual, recorde_dia=recorde_dia, recorde_qtd=recorde_qtd, total_marmitas=total_marmitas)
 
 # Função para filtrar dados do CSV
 def filtrar_dados(data_inicial, data_final, refeicao):
