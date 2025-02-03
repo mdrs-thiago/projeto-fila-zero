@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyAaJvXDn--Z-HbuviNkJhvyyRna3O78vi8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>18621855293</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.mycompany.projetofilazero</string>
+	<key>PROJECT_ID</key>
+	<string>projeto-filazero-e7366</string>
+	<key>STORAGE_BUCKET</key>
+	<string>projeto-filazero-e7366.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:18621855293:ios:badf7303ed3ff87d511c54</string>
+</dict>
+</plist>

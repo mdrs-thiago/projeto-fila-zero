@@ -1,0 +1,18 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "pedidos",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "pedido",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "time_realizado",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ]
+}

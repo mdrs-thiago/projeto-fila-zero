@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "18621855293",
+    "project_id": "projeto-filazero-e7366",
+    "storage_bucket": "projeto-filazero-e7366.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:18621855293:android:165b5feb85fd5f30511c54",
+        "android_client_info": {
+          "package_name": "com.mycompany.projetofilazero"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuzImg8_EZJzwCZ-_N_E8DolWdNI4bLBo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
