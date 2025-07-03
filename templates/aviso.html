@@ -6,6 +6,9 @@
     <title>Enviar Mensagem</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        body {
+            background: #eaf6fb;
+        }
         /* Estilizando a seta para voltar */
         .back-button {
             font-size: 20px;
@@ -39,6 +42,28 @@
                 </div>
             {% endif %}
         {% endwith %}
+
+        <!-- Lista de avisos já cadastrados -->
+        <h4 class="mt-4 mb-2 text-center">Avisos já cadastrados</h4>
+        {% if avisos and avisos|length > 0 %}
+            {% for id, data, mensagem in avisos %}
+                <div class="alert alert-danger d-flex justify-content-between align-items-center" role="alert" style="margin-bottom: 10px;">
+                    <div>
+                        <strong>
+                            {{ data[:10].split('-')[2] }}/{{ data[:10].split('-')[1] }}/{{ data[:10].split('-')[0] }}:
+                        </strong>
+                        {{ mensagem }}
+                    </div>
+                    <form method="post" action="{{ url_for('apagar_aviso', aviso_id=id) }}" style="margin:0;">
+                        <button type="submit" class="btn btn-sm btn-outline-danger ml-2">Apagar</button>
+                    </form>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-info text-center" role="alert">
+                Nenhum aviso cadastrado.
+            </div>
+        {% endif %}
 
     </div>
 
